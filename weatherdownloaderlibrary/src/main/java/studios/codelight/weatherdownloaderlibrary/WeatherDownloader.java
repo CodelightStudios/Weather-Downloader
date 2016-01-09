@@ -1,5 +1,8 @@
 package studios.codelight.weatherdownloaderlibrary;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
 /**
  * The MIT License (MIT)
  *
@@ -26,4 +29,17 @@ package studios.codelight.weatherdownloaderlibrary;
  * Created by kalyan on 9/1/16.
  */
 public class WeatherDownloader {
+    public static final String LOG_TAG = "WeatherDownloader";
+
+    public static void getWeatherDate(String apiKey) {
+        if(apiKey != null) {
+            try {
+                new DownloadData().execute(apiKey);
+            } catch (Exception e) {
+                Log.e(LOG_TAG, e.getMessage());
+            }
+        } else {
+            Log.e(LOG_TAG, "apiKey cannot be null");
+        }
+    }
 }
