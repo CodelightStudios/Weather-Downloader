@@ -1,8 +1,3 @@
-package studios.codelight.weatherdownloaderlibrary;
-
-import android.os.AsyncTask;
-import android.util.Log;
-
 /**
  * The MIT License (MIT)
  *
@@ -28,10 +23,29 @@ import android.util.Log;
  *
  * Created by kalyan on 9/1/16.
  */
+
+package studios.codelight.weatherdownloaderlibrary;
+
+import android.os.AsyncTask;
+import android.util.Log;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class WeatherDownloader {
     public static final String LOG_TAG = "WeatherDownloader";
+    private WeatherDataDownloadListener downloadListener;
 
-    public static void getWeatherDate(String apiKey) {
+    public WeatherDownloader(WeatherDataDownloadListener downloadListener) {
+        this.downloadListener = downloadListener;
+    }
+
+    public void getWeatherDate(String apiKey) {
         if(apiKey != null) {
             try {
                 new DownloadData().execute(apiKey);
@@ -40,6 +54,63 @@ public class WeatherDownloader {
             }
         } else {
             Log.e(LOG_TAG, "apiKey cannot be null");
+        }
+    }
+
+    public interface WeatherDataDownloadListener {
+        String afterDownload();
+    }
+
+
+    private class DownloadData extends AsyncTask<String, Void, String> {
+        private static final String LOGTAG = "DownloadData";
+
+        @Override
+        protected String doInBackground(String... params) {
+            InputStream inputStream = null;
+            URL url;
+            HttpURLConnection httpURLConnection = null;
+            try {
+                url = new URL(params[0]);
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setConnectTimeout(20000);
+                inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
+                return convertInputStreamToString(inputStream);
+            } catch (IOException e) {
+                Log.e(LOGTAG, e.getMessage());
+            } finally {
+                try {
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                    if (httpURLConnection != null) {
+                        httpURLConnection.disconnect();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            if(response == null){
+                Log.e(LOGTAG, "Response is null");
+            } else {
+                downloadListener.afterDownload();
+            }
+        }
+
+        private String convertInputStreamToString(InputStream inputStream) throws IOException{
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            String result = "";
+            while((line = bufferedReader.readLine()) != null) {
+                result += line;
+            }
+            inputStream.close();
+            return result;
         }
     }
 }

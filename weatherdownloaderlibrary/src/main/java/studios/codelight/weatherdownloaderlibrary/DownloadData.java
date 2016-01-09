@@ -27,17 +27,65 @@
 package studios.codelight.weatherdownloaderlibrary;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class DownloadData extends AsyncTask<String, Void, String> {
+    private static final String LOGTAG = "DownloadData";
 
     @Override
     protected String doInBackground(String... params) {
+        InputStream inputStream = null;
+        URL url;
+        HttpURLConnection httpURLConnection = null;
+        try {
+            url = new URL(params[0]);
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setConnectTimeout(20000);
+            inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
+            return convertInputStreamToString(inputStream);
+        } catch (IOException e) {
+            Log.e(LOGTAG, e.getMessage());
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (httpURLConnection != null) {
+                    httpURLConnection.disconnect();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
     @Override
-    protected void onPostExecute(String s) {
+    protected void onPostExecute(String response) {
+        if(response == null){
+            Log.e(LOGTAG, "Response is null");
+        } else {
 
+        }
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException{
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        String result = "";
+        while((line = bufferedReader.readLine()) != null) {
+            result += line;
+        }
+        inputStream.close();
+        return result;
     }
 }
