@@ -1,1 +1,1 @@
-include ':app', ':weatherdownloaderlibrary'
+include ':sample', ':weatherdownloaderlibrary'
