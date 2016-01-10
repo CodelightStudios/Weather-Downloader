@@ -1,12 +1,3 @@
-package studios.codelight.weatherdownloaderlibrary.util;
-
-import studios.codelight.weatherdownloaderlibrary.model.Clouds;
-import studios.codelight.weatherdownloaderlibrary.model.Coord;
-import studios.codelight.weatherdownloaderlibrary.model.Main;
-import studios.codelight.weatherdownloaderlibrary.model.Sys;
-import studios.codelight.weatherdownloaderlibrary.model.Weather;
-import studios.codelight.weatherdownloaderlibrary.model.Wind;
-
 /**
  * The MIT License (MIT)
  * <p/>
@@ -31,28 +22,109 @@ import studios.codelight.weatherdownloaderlibrary.model.Wind;
  * SOFTWARE.
  * Created by kalyan on 9/1/16.
  */
+
+package studios.codelight.weatherdownloaderlibrary.util;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import studios.codelight.weatherdownloaderlibrary.model.Clouds;
+import studios.codelight.weatherdownloaderlibrary.model.Coord;
+import studios.codelight.weatherdownloaderlibrary.model.Main;
+import studios.codelight.weatherdownloaderlibrary.model.Sys;
+import studios.codelight.weatherdownloaderlibrary.model.Weather;
+import studios.codelight.weatherdownloaderlibrary.model.Wind;
+
 public class JsonUtil {
-    public static Coord getCoordObjectFromJson(String json) {
-        return null;
+    public static Coord getCoordObjectFromJson(String json) throws JSONException {
+        JSONObject jsonObject = new JSONObject(json);
+        JSONObject coordJson = jsonObject.getJSONObject("coord");
+        if(coordJson != null) {
+            Coord coord = new Coord();
+            coord.setLon(coordJson.getString("lon"));
+            coord.setLat(coordJson.getString("lat"));
+            return coord;
+        } else {
+            return null;
+        }
     }
 
-    public static Sys getSysObjectFromJson(String json) {
-        return null;
+    public static Sys getSysObjectFromJson(String json) throws JSONException {
+        JSONObject jsonObject = new JSONObject(json);
+        JSONObject sysJson = jsonObject.getJSONObject("sys");
+        if(sysJson != null) {
+            Sys sys = new Sys();
+            sys.setId(sysJson.getString("id"));
+            sys.setType(sysJson.getString("type"));
+            sys.setMessage(sysJson.getString("message"));
+            sys.setCountry(sysJson.getString("country"));
+            sys.setSunrise(sysJson.getString("sunrise"));
+            sys.setSunset(sysJson.getString("sunset"));
+            return sys;
+        } else {
+            return null;
+        }
     }
 
-    public static Weather[] getWeatherObjectFromJson(String json) {
-        return null;
+    public static Weather[] getWeatherObjectFromJson(String json) throws JSONException {
+        JSONObject jsonObject = new JSONObject(json);
+        JSONArray weatherJsonArray = jsonObject.getJSONArray("weather");
+        if(weatherJsonArray != null) {
+            Weather[] weatherArray = new Weather[weatherJsonArray.length()];
+            for (int i = 0; i < weatherJsonArray.length(); i++) {
+                Weather weather = new Weather();
+                JSONObject weatherJsonObject = weatherJsonArray.getJSONObject(i);
+                weather.setId(weatherJsonObject.getString("id"));
+                weather.setDescription(weatherJsonObject.getString("description"));
+                weather.setIcon(weatherJsonObject.getString("icon"));
+                weather.setMain(weatherJsonObject.getString("main"));
+                weatherArray[i] = weather;
+            }
+            return weatherArray;
+        } else {
+            return null;
+        }
     }
 
-    public static Main getMainObjectFromJson(String json) {
-        return null;
+    public static Main getMainObjectFromJson(String json) throws JSONException {
+        JSONObject jsonObject = new JSONObject(json);
+        JSONObject mainJsonObject = jsonObject.getJSONObject("main");
+        if(mainJsonObject != null) {
+            Main main = new Main();
+            main.setHumidity(mainJsonObject.getString("humidity"));
+            main.setPressure(mainJsonObject.getString("pressure"));
+            main.setTemp(mainJsonObject.getString("temp"));
+            main.setTemp_max(mainJsonObject.getString("temp_max"));
+            main.setTemp_min(mainJsonObject.getString("temp_min"));
+            return main;
+        } else {
+            return null;
+        }
     }
 
-    public static Wind getWindObjectFromJson(String json) {
-        return null;
+    public static Wind getWindObjectFromJson(String json) throws JSONException {
+        JSONObject jsonObject = new JSONObject(json);
+        JSONObject windJson = jsonObject.getJSONObject("wind");
+        if(windJson != null) {
+            Wind wind = new Wind();
+            wind.setDeg(windJson.getString("deg"));
+            wind.setSpeed(windJson.getString("speed"));
+            return wind;
+        } else {
+            return null;
+        }
     }
 
-    public static Clouds getCloudsObjectFromJson(String json) {
-        return null;
+    public static Clouds getCloudsObjectFromJson(String json) throws JSONException {
+        JSONObject jsonObject = new JSONObject(json);
+        JSONObject cloudsJson = jsonObject.getJSONObject("clouds");
+        if(cloudsJson != null) {
+            Clouds clouds = new Clouds();
+            clouds.setAll(cloudsJson.getString("all"));
+            return clouds;
+        } else {
+            return null;
+        }
     }
 }

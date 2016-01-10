@@ -1,5 +1,8 @@
 package studios.codelight.weatherdownloaderlibrary;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import studios.codelight.weatherdownloaderlibrary.model.Clouds;
 import studios.codelight.weatherdownloaderlibrary.model.Coord;
 import studios.codelight.weatherdownloaderlibrary.model.Main;
@@ -34,7 +37,9 @@ import studios.codelight.weatherdownloaderlibrary.util.JsonUtil;
  * Created by kalyan on 9/1/16.
  */
 public class WeatherDataBuilder {
-    public static WeatherData buildWeatherData(String response) {
+    public static WeatherData buildWeatherData(String response) throws JSONException {
+        JSONObject jsonObject = new JSONObject(response);
+
         WeatherData weatherData = new WeatherData();
 
         Clouds cloudsData = JsonUtil.getCloudsObjectFromJson(response);
@@ -55,7 +60,12 @@ public class WeatherDataBuilder {
         Wind windData = JsonUtil.getWindObjectFromJson(response);
         weatherData.setWind(windData);
 
-
+        weatherData.setBase(jsonObject.getString("base"));
+        weatherData.setVisibility(jsonObject.getString("visibility"));
+        weatherData.setDt(jsonObject.getString("dt"));
+        weatherData.setId(jsonObject.getString("id"));
+        weatherData.setName(jsonObject.getString("name"));
+        weatherData.setCod(jsonObject.getString("cod"));
 
         return weatherData;
     }

@@ -40,15 +40,18 @@ import java.net.URL;
 public class WeatherDownloader {
     public static final String LOG_TAG = "WeatherDownloader";
     private WeatherDataDownloadListener downloadListener;
+    private Mode mode;
 
-    public WeatherDownloader(WeatherDataDownloadListener downloadListener) {
+    public WeatherDownloader(WeatherDataDownloadListener downloadListener, Mode mode) {
         this.downloadListener = downloadListener;
+        this.mode = mode;
     }
 
-    public void getWeatherDate(String apiKey) {
+    public void getWeatherData(String apiKey) {
         if(apiKey != null) {
             try {
-                new DownloadData().execute(apiKey);
+                String url = buildUrl(apiKey, mode);
+                new DownloadCurrentData().execute(apiKey);
             } catch (Exception e) {
                 Log.e(LOG_TAG, e.getMessage());
             }
@@ -57,12 +60,28 @@ public class WeatherDownloader {
         }
     }
 
+    private String buildUrl(String apiKey, Mode mode) {
+        switch (mode) {
+            case CITYNAME:
+                break;
+            case ZIPCODE:
+                break;
+            case COORDINATES:
+                break;
+            case CITYID:
+                break;
+            default:
+                break;
+        }
+        return null;
+    }
+
     public interface WeatherDataDownloadListener {
-        String afterDownload();
+        String postDownload();
     }
 
 
-    private class DownloadData extends AsyncTask<String, Void, String> {
+    private class DownloadCurrentData extends AsyncTask<String, Void, String> {
         private static final String LOGTAG = "DownloadData";
 
         @Override
@@ -98,7 +117,7 @@ public class WeatherDownloader {
             if(response == null){
                 Log.e(LOGTAG, "Response is null");
             } else {
-                downloadListener.afterDownload();
+                downloadListener.postDownload();
             }
         }
 
@@ -112,5 +131,12 @@ public class WeatherDownloader {
             inputStream.close();
             return result;
         }
+    }
+
+    private enum Mode {
+        ZIPCODE,
+        COORDINATES,
+        CITYID,
+        CITYNAME
     }
 }
