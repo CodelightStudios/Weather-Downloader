@@ -26,6 +26,7 @@
 
 package studios.codelight.weatherdownloaderlibrary;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -37,20 +38,28 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import studios.codelight.weatherdownloaderlibrary.model.WeatherData;
+
 public class WeatherDownloader {
     public static final String LOG_TAG = "WeatherDownloader";
     private WeatherDataDownloadListener downloadListener;
     private Mode mode;
+
+    private final String BASE_URL = "api.openweathermap.org";
+    private final String DATA_PATH = "data";
+    private final String VERSION_PATH = "2.5";
+    private final String WEATHER_PATH = "weather";
+
 
     public WeatherDownloader(WeatherDataDownloadListener downloadListener, Mode mode) {
         this.downloadListener = downloadListener;
         this.mode = mode;
     }
 
-    public void getWeatherData(String apiKey) {
+    public void getWeatherData(String apiKey, String query) {
         if(apiKey != null) {
             try {
-                String url = buildUrl(apiKey, mode);
+                String url = buildUrl(apiKey, mode, query);
                 new DownloadCurrentData().execute(apiKey);
             } catch (Exception e) {
                 Log.e(LOG_TAG, e.getMessage());
@@ -60,16 +69,29 @@ public class WeatherDownloader {
         }
     }
 
-    private String buildUrl(String apiKey, Mode mode) {
+    private String buildUrl(String apiKey, Mode mode, String query) {
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("http")
+                .authority(BASE_URL)
+                .appendPath(DATA_PATH)
+                .appendPath(VERSION_PATH)
+                .appendPath(WEATHER_PATH)
+                .appendQueryParameter("appid", apiKey);
         switch (mode) {
             case CITYNAME:
-                break;
+                builder.appendQueryParameter("q", query);
+                return builder.build().toString();
             case ZIPCODE:
-                break;
+                builder.appendQueryParameter("zip", query);
+                return builder.build().toString();
             case COORDINATES:
-                break;
+                String[] coord = query.split(":");
+                builder.appendQueryParameter("lat", coord[0]);
+                builder.appendQueryParameter("lon", coord[1]);
+                return builder.build().toString();
             case CITYID:
-                break;
+                builder.appendQueryParameter("id", query);
+                return builder.build().toString();
             default:
                 break;
         }
@@ -77,13 +99,12 @@ public class WeatherDownloader {
     }
 
     public interface WeatherDataDownloadListener {
-        String postDownload();
+        void onWeatherDownloadComplete(WeatherData data);
+        void onWeatherDownloadFailed(Exception e);
     }
 
 
     private class DownloadCurrentData extends AsyncTask<String, Void, String> {
-        private static final String LOGTAG = "DownloadData";
-
         @Override
         protected String doInBackground(String... params) {
             InputStream inputStream = null;
@@ -92,11 +113,11 @@ public class WeatherDownloader {
             try {
                 url = new URL(params[0]);
                 httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setConnectTimeout(20000);
+                httpURLConnection.setConnectTimeout(15000); //15 sec
                 inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
                 return convertInputStreamToString(inputStream);
             } catch (IOException e) {
-                Log.e(LOGTAG, e.getMessage());
+                Log.e(LOG_TAG, e.getMessage());
             } finally {
                 try {
                     if (inputStream != null) {
@@ -106,7 +127,7 @@ public class WeatherDownloader {
                         httpURLConnection.disconnect();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(LOG_TAG, e.getMessage());
                 }
             }
             return null;
@@ -115,9 +136,14 @@ public class WeatherDownloader {
         @Override
         protected void onPostExecute(String response) {
             if(response == null){
-                Log.e(LOGTAG, "Response is null");
+                Log.e(LOG_TAG, "Response is null");
             } else {
-                downloadListener.postDownload();
+                try {
+                    downloadListener.onWeatherDownloadComplete(WeatherDataBuilder.buildWeatherData(response));
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, e.getMessage());
+                    downloadListener.onWeatherDownloadFailed(e);
+                }
             }
         }
 
