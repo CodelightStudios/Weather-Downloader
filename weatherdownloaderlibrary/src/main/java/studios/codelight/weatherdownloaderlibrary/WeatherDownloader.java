@@ -56,16 +56,16 @@ public class WeatherDownloader {
         this.mode = mode;
     }
 
-    public void getWeatherData(String apiKey, String query) {
+    public void getCurrentWeatherData(String apiKey, String query) {
         if(apiKey != null) {
             try {
                 String url = buildUrl(apiKey, mode, query);
-                new DownloadCurrentData().execute(apiKey);
+                new DownloadCurrentData().execute(url);
             } catch (Exception e) {
                 Log.e(LOG_TAG, e.getMessage());
             }
         } else {
-            Log.e(LOG_TAG, "apiKey cannot be null");
+            Log.e(LOG_TAG, "ApiKey cannot be null");
         }
     }
 
@@ -99,7 +99,7 @@ public class WeatherDownloader {
     }
 
     public interface WeatherDataDownloadListener {
-        void onWeatherDownloadComplete(WeatherData data);
+        void onWeatherDownloadComplete(WeatherData data, Mode mode);
         void onWeatherDownloadFailed(Exception e);
     }
 
@@ -137,11 +137,12 @@ public class WeatherDownloader {
         protected void onPostExecute(String response) {
             if(response == null){
                 Log.e(LOG_TAG, "Response is null");
+                downloadListener.onWeatherDownloadComplete(null, mode);
             } else {
                 try {
-                    downloadListener.onWeatherDownloadComplete(WeatherDataBuilder.buildWeatherData(response));
+                    downloadListener.onWeatherDownloadComplete(WeatherDataBuilder.buildWeatherData(response), mode);
                 } catch (Exception e) {
-                    Log.e(LOG_TAG, e.getMessage());
+                    Log.e(LOG_TAG, "Invalid data");
                     downloadListener.onWeatherDownloadFailed(e);
                 }
             }
@@ -159,7 +160,7 @@ public class WeatherDownloader {
         }
     }
 
-    private enum Mode {
+    public enum Mode {
         ZIPCODE,
         COORDINATES,
         CITYID,
