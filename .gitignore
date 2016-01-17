@@ -32,3 +32,5 @@ proguard/
 *.aar
 *.zip
 
+#Api Keys file
+keys.xml
