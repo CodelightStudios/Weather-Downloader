@@ -1,19 +1,3 @@
-package studios.codelight.weatherdownloaderlibrary;
-
-import android.util.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import studios.codelight.weatherdownloaderlibrary.model.Clouds;
-import studios.codelight.weatherdownloaderlibrary.model.Coord;
-import studios.codelight.weatherdownloaderlibrary.model.Main;
-import studios.codelight.weatherdownloaderlibrary.model.Sys;
-import studios.codelight.weatherdownloaderlibrary.model.Weather;
-import studios.codelight.weatherdownloaderlibrary.model.WeatherData;
-import studios.codelight.weatherdownloaderlibrary.model.Wind;
-import studios.codelight.weatherdownloaderlibrary.util.JsonUtil;
-
 /**
  * The MIT License (MIT)
  * <p/>
@@ -38,6 +22,23 @@ import studios.codelight.weatherdownloaderlibrary.util.JsonUtil;
  * SOFTWARE.
  * Created by kalyan on 9/1/16.
  */
+
+package studios.codelight.weatherdownloaderlibrary;
+
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import studios.codelight.weatherdownloaderlibrary.model.Clouds;
+import studios.codelight.weatherdownloaderlibrary.model.Coord;
+import studios.codelight.weatherdownloaderlibrary.model.Main;
+import studios.codelight.weatherdownloaderlibrary.model.Sys;
+import studios.codelight.weatherdownloaderlibrary.model.Weather;
+import studios.codelight.weatherdownloaderlibrary.model.WeatherData;
+import studios.codelight.weatherdownloaderlibrary.model.Wind;
+import studios.codelight.weatherdownloaderlibrary.util.JsonUtil;
+
 public class WeatherDataBuilder {
     private static final String LOG_TAG = "WeatherDownloader";
     public static WeatherData buildWeatherData(String response) {
