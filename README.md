@@ -1,5 +1,7 @@
+[ ![Download](https://api.bintray.com/packages/kalyandechiraju/CodelightStudios/Weather-Downloader/images/download.svg) ](https://bintray.com/kalyandechiraju/CodelightStudios/Weather-Downloader/_latestVersion)
 # Weather-Downloader
-Get the weather data you need right into your android app in an easy and efficient way.
+Get the weather data you need right into your android app in an easy and efficient way. It works with the openweathermap api.
+
 
 #License
     The MIT License (MIT)
