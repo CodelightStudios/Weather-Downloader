@@ -1,5 +1,19 @@
 # Weather-Downloader
-Get the weather data you need right into your android app in an easy and efficient way. It works with the openweathermap api.
+Want to show the weather information in your app, here is a simple and efficient solution for you.
+Now show the weather information you need in your app without deviating away from your app's core idea.
+This is a helper library to get basic weather information into your app (not into a weather app of course).
+It uses the openweathermap api to get the weather data. Please note that this is still in beta phase and is limited to
+get the current weather conditions only. Forecast and Historical data will be added in future.
+
+#Include in your project
+##Using Gradle
+```javascript
+compile 'codelight.studios.android:weather-downloader:0.1'
+```
+
+##How to use
+
+
 
 
 #License
