@@ -2,7 +2,7 @@
 Want to show the weather information in your app, here is a simple and efficient solution for you.
 Now show the weather information you need in your app without deviating away from your app's core idea.
 This is a helper library to get basic weather information into your app (not into a weather app of course).
-It uses the openweathermap api to get the weather data. Please note that this is still in beta phase and is limited to
+It uses the [openweathermap api](http://openweathermap.org/api) to get the weather data. Please note that this is still in beta phase and is limited to
 get the current weather conditions only. Forecast and Historical data will be added in future releases.
 
 #Include in your project
@@ -59,6 +59,28 @@ Invoke the `getCurrentWeatherData` method by passing your Api Key and the Query 
 
 That's it! Once the weather is downloaded in the background thread, you will be notified via the above mentioned
 `onWeatherDownloadComplete` or `onWeatherDownloadFailed` listeners.
+
+#Other features
+By default the weather data is downloaded in KELVIN units. You can easily convert it into CELSIUS or FAHRENHEIT by using 
+`WeatherUnits` class. For example, take a look into the sample app in repo.
+
+```java
+
+    @Override
+    public void onWeatherDownloadComplete(WeatherData data, WeatherDownloader.Mode mode) {
+        if (mode == WeatherDownloader.Mode.CITYNAME) {
+            cityNameTextView.setText(String.format("%.2f", WeatherUnits.convertToCelsius(data.getMain().getTemp())));
+        } else if (mode == WeatherDownloader.Mode.CITYID) {
+            cityIdProgress.setVisibility(View.GONE);
+            cityIdTextView.setText(String.format("%.2f", WeatherUnits.convertToFahrenheit(data.getMain().getTemp())));
+        }
+    }
+
+```
+
+#Our other libraries
+##[Android Smart Login library](https://github.com/CodelightStudios/Android-Smart-Login)
+An easy and efficient way to add login functionality into your app.
 
 
 #License
