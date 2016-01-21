@@ -3,7 +3,7 @@ Want to show the weather information in your app, here is a simple and efficient
 Now show the weather information you need in your app without deviating away from your app's core idea.
 This is a helper library to get basic weather information into your app (not into a weather app of course).
 It uses the openweathermap api to get the weather data. Please note that this is still in beta phase and is limited to
-get the current weather conditions only. Forecast and Historical data will be added in future.
+get the current weather conditions only. Forecast and Historical data will be added in future releases.
 
 #Include in your project
 ##Using Gradle
@@ -12,8 +12,53 @@ compile 'codelight.studios.android:weather-downloader:0.1'
 ```
 
 ##How to use
+###1. Implement the WeatherDataDownloadListener in your Activity
+`WeatherDataDownloadListener` implements the callback functions to be called after the weather info is loaded.
 
+```java
+    
+    public class MainActivity extends AppCompatActivity implements WeatherDownloader.WeatherDataDownloadListener {
+    
+        ...
+        
+        @Override
+        public void onWeatherDownloadComplete(WeatherData data, WeatherDownloader.Mode mode) {
+            
+        }
+    
+        @Override
+        public void onWeatherDownloadFailed(Exception e) {
+            
+        }
+    }
 
+```
+
+###2. Invoke the getCurrentWeatherData to get the current weather conditions
+Invoke the `getCurrentWeatherData` method by passing your Api Key and the Query (location name/zipcode/id/coordinates) strings. 
+
+```java
+
+    //Get data by city name
+    WeatherDownloader downloader = new WeatherDownloader(MainActivity.this, WeatherDownloader.Mode.CITYNAME);
+    downloader.getCurrentWeatherData(getResources().getString(R.string.weather_api_key), locationQuery);
+    
+    //Get data by city ID
+    WeatherDownloader downloader = new WeatherDownloader(MainActivity.this, WeatherDownloader.Mode.CITYID);
+    downloader.getCurrentWeatherData(getResources().getString(R.string.weather_api_key), cityIdQuery);
+    
+    //Get data by zip code
+    WeatherDownloader downloader = new WeatherDownloader(MainActivity.this, WeatherDownloader.Mode.ZIPCODE);
+    downloader.getCurrentWeatherData(getResources().getString(R.string.weather_api_key), zipCodeQuery);
+    
+    //Get data by coordinates. In this method, the coordinatesQuery should be in the form of latitude:longitude format only
+    WeatherDownloader downloader = new WeatherDownloader(MainActivity.this, WeatherDownloader.Mode.COORDINATES);
+    downloader.getCurrentWeatherData(getResources().getString(R.string.weather_api_key), coordinatesQuery);
+    
+```
+
+That's it! Once the weather is downloaded in the background thread, you will be notified via the above mentioned
+`onWeatherDownloadComplete` or `onWeatherDownloadFailed` listeners.
 
 
 #License
