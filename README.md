@@ -7,6 +7,7 @@ get the current weather conditions only. Forecast and Historical data will be ad
 
 #Include in your project
 ##Using Gradle
+Add this in `dependencies` of your app's `build.gradle` file.
 ```javascript
 compile 'codelight.studios.android:weather-downloader:0.1'
 ```
