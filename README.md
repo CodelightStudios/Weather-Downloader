@@ -51,7 +51,8 @@ Invoke the `getCurrentWeatherData` method by passing your Api Key and the Query 
     WeatherDownloader downloader = new WeatherDownloader(MainActivity.this, WeatherDownloader.Mode.ZIPCODE);
     downloader.getCurrentWeatherData(getResources().getString(R.string.weather_api_key), zipCodeQuery);
     
-    //Get data by coordinates. In this method, the coordinatesQuery should be in the form of latitude:longitude format only
+    //Get data by coordinates.
+    //In this method, the coordinatesQuery should be in the form of latitude:longitude format only.
     WeatherDownloader downloader = new WeatherDownloader(MainActivity.this, WeatherDownloader.Mode.COORDINATES);
     downloader.getCurrentWeatherData(getResources().getString(R.string.weather_api_key), coordinatesQuery);
     
@@ -69,14 +70,26 @@ By default the weather data is downloaded in KELVIN units. You can easily conver
     @Override
     public void onWeatherDownloadComplete(WeatherData data, WeatherDownloader.Mode mode) {
         if (mode == WeatherDownloader.Mode.CITYNAME) {
-            cityNameTextView.setText(String.format("%.2f", WeatherUnits.convertToCelsius(data.getMain().getTemp())));
+            cityNameTextView.
+                    setText(String.format("%.2f", WeatherUnits.convertToCelsius(data.getMain().getTemp())));
         } else if (mode == WeatherDownloader.Mode.CITYID) {
             cityIdProgress.setVisibility(View.GONE);
-            cityIdTextView.setText(String.format("%.2f", WeatherUnits.convertToFahrenheit(data.getMain().getTemp())));
+            cityIdTextView.
+                    setText(String.format("%.2f", WeatherUnits.convertToFahrenheit(data.getMain().getTemp())));
         }
     }
 
 ```
+
+#Contribution
+I would love to welcome everyone of you to contribute to this project and make it better.
+Currently we are focusing on the current weather data only, 
+but other forecast and historical data features would be a great addition.
+Encounter any issue? Don't hesitate to [open an issue](https://github.com/CodelightStudios/Weather-Downloader/issues).
+
+Convention I would like to follow: **Master branch** would be the development branch. 
+So feel free to fork from the Master branch. **Release branch** will be merged with master branch after every major release.
+
 
 #Our other libraries
 ##[Android Smart Login library](https://github.com/CodelightStudios/Android-Smart-Login)
