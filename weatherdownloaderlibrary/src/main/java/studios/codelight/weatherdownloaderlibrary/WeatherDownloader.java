@@ -41,7 +41,7 @@ import java.net.URL;
 import studios.codelight.weatherdownloaderlibrary.model.WeatherData;
 
 public class WeatherDownloader {
-    public static final String LOG_TAG = "WeatherDownloader";
+    private static final String LOG_TAG = "WeatherDownloader";
     private WeatherDataDownloadListener downloadListener;
     private Mode mode;
 

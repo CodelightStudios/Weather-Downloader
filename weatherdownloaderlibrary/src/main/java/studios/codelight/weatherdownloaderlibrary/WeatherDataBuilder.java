@@ -39,9 +39,9 @@ import studios.codelight.weatherdownloaderlibrary.model.WeatherData;
 import studios.codelight.weatherdownloaderlibrary.model.Wind;
 import studios.codelight.weatherdownloaderlibrary.util.JsonUtil;
 
-public class WeatherDataBuilder {
+class WeatherDataBuilder {
     private static final String LOG_TAG = "WeatherDownloader";
-    public static WeatherData buildWeatherData(String response) {
+    static WeatherData buildWeatherData(String response) {
         JSONObject jsonObject;
         try {
             jsonObject = new JSONObject(response);
