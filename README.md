@@ -1,4 +1,4 @@
-# Weather-Downloader    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Weather--Downloader-green.svg?style=true)](https://android-arsenal.com/details/1/3061)
+# Weather-Downloader    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Weather--Downloader-green.svg?style=true)](https://android-arsenal.com/details/1/3061) [ ![Download](https://api.bintray.com/packages/kalyandechiraju/CodelightStudios/Weather-Downloader/images/download.svg?version=version-0.2) ](https://bintray.com/kalyandechiraju/CodelightStudios/Weather-Downloader/version-0.2/link)
 
 Want to show the weather information in your app, here is a simple and efficient solution for you.
 Now show the weather information you need in your app without deviating away from your app's core idea.
