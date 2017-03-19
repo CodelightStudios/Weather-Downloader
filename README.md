@@ -8,15 +8,15 @@ get the current weather conditions only. Forecast and Historical data will be ad
 
 **Note: In Progress. Our aim is to simply the process of getting weather information for developers. In coming versions you will get weather icons along with weather based on conditions.**
 
-#Include in your project
-##Using Gradle
+# Include in your project
+## Using Gradle
 Add this in `dependencies` of your app's `build.gradle` file.
 ```javascript
 compile 'codelight.studios.android:weather-downloader:0.1'
 ```
 
-##How to use
-###1. Implement the WeatherDataDownloadListener in your Activity
+## How to use
+### 1. Implement the WeatherDataDownloadListener in your Activity
 `WeatherDataDownloadListener` implements the callback functions to be called after the weather info is loaded.
 
 ```java
@@ -38,7 +38,7 @@ compile 'codelight.studios.android:weather-downloader:0.1'
 
 ```
 
-###2. Invoke the getCurrentWeatherData to get the current weather conditions
+### 2. Invoke the getCurrentWeatherData to get the current weather conditions
 Invoke the `getCurrentWeatherData` method by passing your Api Key and the Query (location name/zipcode/id/coordinates) strings. 
 
 ```java
@@ -65,7 +65,7 @@ Invoke the `getCurrentWeatherData` method by passing your Api Key and the Query 
 That's it! Once the weather is downloaded in the background thread, you will be notified via the above mentioned
 `onWeatherDownloadComplete` or `onWeatherDownloadFailed` listeners.
 
-#Other features
+# Other features
 By default the weather data is downloaded in KELVIN units. You can easily convert it into CELSIUS or FAHRENHEIT by using 
 `WeatherUnits` class. For example, take a look into the sample app in repo.
 
@@ -85,7 +85,7 @@ By default the weather data is downloaded in KELVIN units. You can easily conver
 
 ```
 
-#Contribution
+# Contribution
 I would love to welcome everyone of you to contribute to this project and make it better.
 Currently we are focusing on the current weather data only, 
 but other forecast and historical data features would be a great addition.
@@ -95,12 +95,12 @@ Convention I would like to follow: **Master branch** would be the development br
 So feel free to fork from the Master branch. **Release branch** will be merged with master branch after every major release.
 
 
-#Our other libraries
-##[Android Smart Login library](https://github.com/CodelightStudios/Android-Smart-Login)
+# Our other libraries
+## [Android Smart Login library](https://github.com/CodelightStudios/Android-Smart-Login)
 An easy and efficient way to add login functionality into your app.
 
 
-#License
+# License
     The MIT License (MIT)
 
     Copyright (c) 2016 Codelight Studios
