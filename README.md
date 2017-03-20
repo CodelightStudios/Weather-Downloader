@@ -1,4 +1,4 @@
-# Weather-Downloader    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Weather--Downloader-green.svg?style=true)](https://android-arsenal.com/details/1/3061) [ ![Download](https://api.bintray.com/packages/kalyandechiraju/CodelightStudios/Weather-Downloader/images/download.svg?version=version-0.2) ](https://bintray.com/kalyandechiraju/CodelightStudios/Weather-Downloader/version-0.2/link)
+# Weather-Downloader    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Weather--Downloader-green.svg?style=true)](https://android-arsenal.com/details/1/3061) [ ![Download](https://api.bintray.com/packages/kalyandechiraju/CodelightStudios/Weather-Downloader/images/download.svg?version=version-0.2) ](https://bintray.com/kalyandechiraju/CodelightStudios/Weather-Downloader/version-0.2/link) [![MethodCount](https://img.shields.io/badge/Methods%20and%20size-153%20%7C%2017%20KB-e91e63.svg)](http://www.methodscount.com/?lib=codelight.studios.android%3Aweather-downloader%3A0.2)
 
 Want to show the weather information in your app, here is a simple and efficient solution for you.
 Now show the weather information you need in your app without deviating away from your app's core idea.
@@ -56,7 +56,7 @@ Invoke the `getCurrentWeatherData` method by passing your Api Key and the Query 
     downloader.getCurrentWeatherData(getResources().getString(R.string.weather_api_key), zipCodeQuery);
     
     //Get data by coordinates.
-    //In this method, the coordinatesQuery should be in the form of latitude:longitude format only.
+    //In this method, the coordinatesQuery should be in the form of latitude:longitude format only.
     WeatherDownloader downloader = new WeatherDownloader(MainActivity.this, WeatherDownloader.Mode.COORDINATES);
     downloader.getCurrentWeatherData(getResources().getString(R.string.weather_api_key), coordinatesQuery);
     
@@ -103,7 +103,7 @@ An easy and efficient way to add login functionality into your app.
 # License
     The MIT License (MIT)
 
-    Copyright (c) 2016 Codelight Studios
+    Copyright (c) 2017 Codelight Studios
     
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
