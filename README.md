@@ -6,8 +6,6 @@ This is a helper library to get basic weather information into your app (not int
 It uses the [openweathermap api](http://openweathermap.org/api) to get the weather data. Please note that this is still in beta phase and is limited to
 get the current weather conditions only. Forecast and Historical data will be added in future releases.
 
-**Note: In Progress. Our aim is to simply the process of getting weather information for developers. In coming versions you will get weather icons along with weather based on conditions.**
-
 # Include in your project
 ## Using Gradle
 Add this in `dependencies` of your app's `build.gradle` file.
